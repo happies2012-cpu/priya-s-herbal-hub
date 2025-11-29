@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Filter, Search } from "lucide-react";
+import { ShoppingCart, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { products } from "@/data/products";
+import { useCart } from "@/contexts/CartContext";
 
 const Products = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { addToCart } = useCart();
+  
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const productsByType = [
     { category: "Shakes & Smoothies", icon: "🥤", count: 12, products: ["Formula 1 Shake", "Protein Drink Mix", "PDM Powder"] },
@@ -44,80 +53,84 @@ const Products = () => {
         </div>
       </section>
 
-      {/* Search Bar */}
-      <section className="py-8 bg-muted/30 border-b">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search products..."
-                className="pl-10 py-6 text-lg"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Products Tabs */}
+      {/* Featured Products */}
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Tabs defaultValue="type" className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-12">
-              <TabsTrigger value="type" className="text-lg">Browse by Type</TabsTrigger>
-              <TabsTrigger value="need" className="text-lg">Browse by Need</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="type" className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {productsByType.map((category, index) => (
-                  <Card key={index} className="hover-lift cursor-pointer group">
-                    <CardHeader>
-                      <div className="text-5xl mb-4">{category.icon}</div>
-                      <CardTitle className="text-xl">{category.category}</CardTitle>
-                      <CardDescription>{category.count} Products</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2 mb-4">
-                        {category.products.map((product, idx) => (
-                          <li key={idx} className="text-sm text-muted-foreground flex items-center">
-                            <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>
-                            {product}
-                          </li>
-                        ))}
-                      </ul>
-                      <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
-                        View All
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="need" className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {productsByNeed.map((category, index) => (
-                  <Card key={index} className="hover-lift cursor-pointer group">
-                    <CardHeader>
-                      <div className="text-5xl mb-4">{category.icon}</div>
-                      <CardTitle className="text-xl">{category.category}</CardTitle>
-                      <CardDescription>{category.count} Products</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4">{category.description}</p>
-                      <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
-                        Explore Solutions
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold mb-2">Featured Products</h2>
+            <p className="text-muted-foreground">Discover our most popular wellness solutions</p>
+          </div>
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredProducts.slice(0, 8).map((product) => (
+              <Card key={product.id} className="group overflow-hidden hover:shadow-xl transition-all">
+                <Link to={`/products/${product.slug}`}>
+                  <div className="aspect-square overflow-hidden bg-muted">
+                    <img
+                      src={product.mainImage}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                </Link>
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <Badge variant="secondary" className="uppercase text-xs">
+                      {product.type}
+                    </Badge>
+                    <div className="flex items-center gap-1">
+                      <Star className="w-4 h-4 fill-primary text-primary" />
+                      <span className="text-sm font-medium">{product.rating}</span>
+                    </div>
+                  </div>
+                  
+                  <Link to={`/products/${product.slug}`}>
+                    <h3 className="font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+                      {product.name}
+                    </h3>
+                  </Link>
+                  
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {product.description}
+                  </p>
+                  
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-xl font-bold text-primary">
+                        ${product.price.toFixed(2)}
+                      </span>
+                      {product.originalPrice && (
+                        <span className="text-sm text-muted-foreground line-through">
+                          ${product.originalPrice.toFixed(2)}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-2">
+                    <Button 
+                      className="flex-1" 
+                      size="sm"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        addToCart(product);
+                      }}
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-1" />
+                      Add to Cart
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      asChild
+                    >
+                      <Link to={`/products/${product.slug}`}>View</Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
