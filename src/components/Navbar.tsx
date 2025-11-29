@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown, Leaf } from "lucide-react";
+import { Menu, X, ChevronDown, Leaf, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "./ThemeToggle";
+import { useCart } from "@/contexts/CartContext";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,6 +16,7 @@ import {
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { getCartCount } = useCart();
 
   const productsByType = [
     { name: "Shakes & Smoothies", href: "/products/shakes" },
@@ -154,6 +157,27 @@ const Navbar = () => {
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2">
             <ThemeToggle />
+            
+            {/* Cart Icon */}
+            <Button 
+              asChild 
+              variant="ghost" 
+              size="icon" 
+              className="relative"
+            >
+              <Link to="/cart">
+                <ShoppingCart className="h-5 w-5" />
+                {getCartCount() > 0 && (
+                  <Badge 
+                    variant="destructive" 
+                    className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                  >
+                    {getCartCount()}
+                  </Badge>
+                )}
+              </Link>
+            </Button>
+            
             <Button asChild variant="default" className="hidden lg:inline-flex btn-glow">
               <Link to="/distributor-login">Distributor Login</Link>
             </Button>
