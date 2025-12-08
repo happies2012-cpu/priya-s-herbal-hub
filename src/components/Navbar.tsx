@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown, Leaf, ShoppingCart } from "lucide-react";
+import { Menu, X, ChevronDown, Leaf, ShoppingCart, Heart, GitCompare, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "./ThemeToggle";
 import { useCart } from "@/contexts/CartContext";
+import { useWishlist } from "@/contexts/WishlistContext";
+import { useCompare } from "@/contexts/CompareContext";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,26 +16,37 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { getCartCount } = useCart();
+  const { getWishlistCount } = useWishlist();
+  const { getCompareCount } = useCompare();
+  const { user, isAuthenticated, logout } = useAuth();
 
   const productsByType = [
-    { name: "Shakes & Smoothies", href: "/products/shakes" },
-    { name: "Teas & Beverages", href: "/products/teas" },
-    { name: "Vitamins & Supplements", href: "/products/vitamins" },
-    { name: "Skin Care", href: "/products/skincare" },
-    { name: "Body & Hair Care", href: "/products/bodycare" },
+    { name: "Shakes & Smoothies", href: "/products?type=shake" },
+    { name: "Teas & Beverages", href: "/products?type=tea" },
+    { name: "Vitamins & Supplements", href: "/products?type=supplement" },
+    { name: "Skin Care", href: "/products?type=skincare" },
+    { name: "Body & Hair Care", href: "/products?type=bodycare" },
+    { name: "Protein Snacks", href: "/products?type=snack" },
   ];
 
   const productsByNeed = [
-    { name: "Healthy Weight", href: "/products/weight" },
-    { name: "Protein Boosters", href: "/products/protein" },
-    { name: "Sports Performance", href: "/products/performance" },
-    { name: "Daily Nutrition", href: "/products/nutrition" },
-    { name: "Immune Support", href: "/products/immune" },
-    { name: "Stress & Sleep", href: "/products/wellness" },
+    { name: "Weight Management", href: "/products?category=weight-management" },
+    { name: "Sports Nutrition", href: "/products?category=sports" },
+    { name: "Daily Nutrition", href: "/products?category=daily-nutrition" },
+    { name: "Heart Health", href: "/products?category=heart-health" },
+    { name: "Digestive Health", href: "/products?category=digestive" },
+    { name: "Energy & Focus", href: "/products?category=energy" },
   ];
 
   const goals = [
@@ -44,11 +58,11 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-soft">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-bounce group-hover:scale-110">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform group-hover:scale-110">
               <Leaf className="h-6 w-6" />
             </div>
             <span className="text-xl font-bold text-primary">PriyaHerbalHub</span>
@@ -58,21 +72,15 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center space-x-1">
             <NavigationMenu>
               <NavigationMenuList>
-                {/* Achieve Your Goals */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="hover:text-primary transition-smooth">
-                    Achieve Your Goals
-                  </NavigationMenuTrigger>
+                  <NavigationMenuTrigger>Achieve Your Goals</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4">
                       {goals.map((item) => (
                         <li key={item.name}>
                           <NavigationMenuLink asChild>
-                            <Link
-                              to={item.href}
-                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                            >
-                              <div className="text-sm font-medium leading-none">{item.name}</div>
+                            <Link to={item.href} className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                              <div className="text-sm font-medium">{item.name}</div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
@@ -81,11 +89,8 @@ const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* Products */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="hover:text-primary transition-smooth">
-                    Products
-                  </NavigationMenuTrigger>
+                  <NavigationMenuTrigger>Products</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid w-[600px] grid-cols-2 gap-4 p-4">
                       <div>
@@ -94,12 +99,7 @@ const Navbar = () => {
                           {productsByType.map((item) => (
                             <li key={item.name}>
                               <NavigationMenuLink asChild>
-                                <Link
-                                  to={item.href}
-                                  className="block select-none rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
-                                >
-                                  <div className="text-sm font-medium">{item.name}</div>
-                                </Link>
+                                <Link to={item.href} className="block select-none rounded-md p-2 text-sm hover:bg-accent hover:text-accent-foreground">{item.name}</Link>
                               </NavigationMenuLink>
                             </li>
                           ))}
@@ -111,12 +111,7 @@ const Navbar = () => {
                           {productsByNeed.map((item) => (
                             <li key={item.name}>
                               <NavigationMenuLink asChild>
-                                <Link
-                                  to={item.href}
-                                  className="block select-none rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
-                                >
-                                  <div className="text-sm font-medium">{item.name}</div>
-                                </Link>
+                                <Link to={item.href} className="block select-none rounded-md p-2 text-sm hover:bg-accent hover:text-accent-foreground">{item.name}</Link>
                               </NavigationMenuLink>
                             </li>
                           ))}
@@ -126,27 +121,26 @@ const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* Other Menu Items */}
                 <NavigationMenuItem>
-                  <Link to="/resources" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                    Wellness Resources
+                  <Link to="/resources" className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                    Resources
                   </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link to="/business" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                    Business Opportunity
+                  <Link to="/business" className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                    Business
                   </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link to="/about" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                    About Us
+                  <Link to="/about" className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                    About
                   </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link to="/contact" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                  <Link to="/contact" className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
                     Contact
                   </Link>
                 </NavigationMenuItem>
@@ -154,41 +148,71 @@ const Navbar = () => {
             </NavigationMenu>
           </div>
 
-          {/* Right Side Actions */}
-          <div className="flex items-center space-x-2">
+          {/* Right Actions */}
+          <div className="flex items-center space-x-1">
             <ThemeToggle />
             
-            {/* Cart Icon */}
-            <Button 
-              asChild 
-              variant="ghost" 
-              size="icon" 
-              className="relative"
-            >
-              <Link to="/cart">
-                <ShoppingCart className="h-5 w-5" />
-                {getCartCount() > 0 && (
-                  <Badge 
-                    variant="destructive" 
-                    className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
-                  >
-                    {getCartCount()}
+            {/* Compare */}
+            <Button asChild variant="ghost" size="icon" className="relative">
+              <Link to="/compare">
+                <GitCompare className="h-5 w-5" />
+                {getCompareCount() > 0 && (
+                  <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                    {getCompareCount()}
                   </Badge>
                 )}
               </Link>
             </Button>
             
-            <Button asChild variant="default" className="hidden lg:inline-flex btn-glow">
-              <Link to="/distributor-login">Distributor Login</Link>
+            {/* Wishlist */}
+            <Button asChild variant="ghost" size="icon" className="relative">
+              <Link to="/wishlist">
+                <Heart className="h-5 w-5" />
+                {getWishlistCount() > 0 && (
+                  <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                    {getWishlistCount()}
+                  </Badge>
+                )}
+              </Link>
+            </Button>
+            
+            {/* Cart */}
+            <Button asChild variant="ghost" size="icon" className="relative">
+              <Link to="/cart">
+                <ShoppingCart className="h-5 w-5" />
+                {getCartCount() > 0 && (
+                  <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                    {getCartCount()}
+                  </Badge>
+                )}
+              </Link>
             </Button>
 
-            {/* Mobile menu button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
+            {/* User Menu */}
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem disabled className="font-medium">{user?.name}</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild><Link to="/wishlist">My Wishlist</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild><Link to="/faq">FAQ</Link></DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button asChild variant="default" size="sm" className="hidden lg:inline-flex">
+                <Link to="/login">Login</Link>
+              </Button>
+            )}
+
+            {/* Mobile menu */}
+            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
@@ -196,54 +220,32 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 space-y-2 animate-fade-in">
-            <Link
-              to="/"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent transition-smooth"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              to="/products"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent transition-smooth"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Products
-            </Link>
-            <Link
-              to="/resources"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent transition-smooth"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Wellness Resources
-            </Link>
-            <Link
-              to="/business"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent transition-smooth"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Business Opportunity
-            </Link>
-            <Link
-              to="/about"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent transition-smooth"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              About Us
-            </Link>
-            <Link
-              to="/contact"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent transition-smooth"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Contact
-            </Link>
-            <Button asChild className="w-full mt-4">
-              <Link to="/distributor-login" onClick={() => setMobileMenuOpen(false)}>
-                Distributor Login
+          <div className="lg:hidden py-4 space-y-2 animate-fade-in border-t">
+            {[
+              { to: "/", label: "Home" },
+              { to: "/products", label: "Products" },
+              { to: "/goals/weight", label: "Weight Management" },
+              { to: "/goals/fitness", label: "Fitness" },
+              { to: "/resources", label: "Resources" },
+              { to: "/business", label: "Business Opportunity" },
+              { to: "/about", label: "About Us" },
+              { to: "/contact", label: "Contact" },
+              { to: "/faq", label: "FAQ" },
+            ].map(link => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="block px-3 py-2 rounded-md hover:bg-accent"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
               </Link>
-            </Button>
+            ))}
+            {!isAuthenticated && (
+              <Button asChild className="w-full mt-4">
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Login / Sign Up</Link>
+              </Button>
+            )}
           </div>
         )}
       </div>
