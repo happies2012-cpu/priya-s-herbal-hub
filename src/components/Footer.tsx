@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { Leaf, Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import priyaLogo from "@/assets/priya-logo.png";
 
 const Footer = () => {
   return (
@@ -10,11 +11,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Column */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <Leaf className="h-6 w-6" />
-              </div>
-              <span className="text-xl font-bold text-primary">PriyaHerbalHub</span>
+            <Link to="/" className="flex items-center">
+              <img 
+                src={priyaLogo} 
+                alt="Priya Herbal Hub" 
+                className="h-14 w-auto object-contain"
+              />
             </Link>
             <p className="text-sm text-muted-foreground">
               Transform your life with premium herbal nutrition and wellness products. Join thousands who've achieved their health goals with us.
