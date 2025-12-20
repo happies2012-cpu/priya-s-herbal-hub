@@ -4,7 +4,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import priyaLogo from "@/assets/priya-logo.png";
-import heroNutrition from "@/assets/hero-nutrition.png";
+import nutritionBanner from "@/assets/nutrition-banner.jpg";
 import heroFitness from "@/assets/hero-fitness.png";
 import heroHealthyFood from "@/assets/hero-healthy-food.png";
 import heroPriya from "@/assets/hero-priya.png";
@@ -18,7 +18,7 @@ const slides = [
     description: "Discover premium herbal nutrition products designed to help you achieve your health goals naturally.",
     cta1: { text: "Explore Products", link: "/products" },
     cta2: { text: "Free Consultation", link: "/contact" },
-    image: heroNutrition,
+    image: nutritionBanner,
   },
   {
     id: 2,

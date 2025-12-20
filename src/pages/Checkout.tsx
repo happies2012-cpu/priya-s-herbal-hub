@@ -31,8 +31,8 @@ const Checkout = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   
   const [formData, setFormData] = useState({
-    firstName: user?.name?.split(" ")[0] || "",
-    lastName: user?.name?.split(" ")[1] || "",
+    firstName: user?.full_name?.split(" ")[0] || "",
+    lastName: user?.full_name?.split(" ")[1] || "",
     email: user?.email || "",
     phone: "",
     address: "",
@@ -78,31 +78,20 @@ const Checkout = () => {
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    const orderId = `ORD-${Date.now()}`;
+    const orderNumber = `ORD-${Date.now()}`;
     
-      addOrder({
-        id: orderId,
-        items: cart,
-        subtotal,
-        tax,
-        shipping,
-        total,
-        status: "pending",
-        createdAt: new Date().toISOString(),
-        shippingAddress: {
-          fullName: `${formData.firstName} ${formData.lastName}`,
-          street: formData.address,
-          city: formData.city,
-          state: formData.state || "India",
-          zipCode: formData.pincode,
-          country: "India",
-          phone: formData.phone,
-        },
-        paymentMethod,
-      });
+    await addOrder({
+      order_number: orderNumber,
+      items: cart,
+      total_amount: total,
+      status: "pending",
+    });
     
     clearCart();
-    navigate(`/order-success/${orderId}`);
+    navigate(`/order-success/${orderNumber}`);
+    
+    clearCart();
+    navigate(`/order-success/${orderNumber}`);
   };
 
   if (cart.length === 0) {
