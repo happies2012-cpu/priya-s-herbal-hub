@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Eye, EyeOff, Leaf } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
+import priyaLogo from "@/assets/priya-logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,10 +36,7 @@ const Login = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link to="/" className="flex items-center justify-center gap-2 mb-4">
-            <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
-              <Leaf className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold text-primary">PriyaHerbalHub</span>
+            <img src={priyaLogo} alt="PriyaHerbalHub" className="h-12 w-auto" />
           </Link>
           <CardTitle>Welcome</CardTitle>
           <CardDescription>Sign in to your account or create a new one</CardDescription>
