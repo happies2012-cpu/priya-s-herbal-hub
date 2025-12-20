@@ -10,27 +10,27 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: Phone,
-      title: "Phone",
-      details: ["+1 (555) 123-4567", "+1 (555) 987-6543"],
-      description: "Mon-Fri, 9am-6pm EST",
+      title: "Phone / WhatsApp",
+      details: ["+91 88841 62999"],
+      description: "Mon-Sat, 9am-8pm IST",
     },
     {
       icon: Mail,
       title: "Email",
-      details: ["info@priyaherbalhub.com", "support@priyaherbalhub.com"],
+      details: ["pranu21m@gmail.com", "support@priyaherbalhub.com"],
       description: "24/7 Support",
     },
     {
       icon: MapPin,
       title: "Office",
-      details: ["123 Wellness Avenue", "Health City, HC 12345"],
+      details: ["Bangalore", "Karnataka, India"],
       description: "Visit by appointment",
     },
     {
       icon: Clock,
       title: "Business Hours",
-      details: ["Mon-Fri: 9am - 6pm", "Sat: 10am - 4pm"],
-      description: "Closed on Sundays",
+      details: ["Mon-Sat: 9am - 8pm IST", "Sunday: 10am - 4pm"],
+      description: "All India Delivery",
     },
   ];
 

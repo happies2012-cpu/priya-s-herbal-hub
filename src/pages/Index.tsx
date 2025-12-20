@@ -7,7 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import BMICalculator from "@/components/BMICalculator";
-import heroImage from "@/assets/hero-wellness.jpg";
+import HeroSlider from "@/components/HeroSlider";
 import brandIcon from "@/assets/priya-brand-icon.svg";
 import { getFeaturedProducts, getProductsOnSale } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
@@ -35,37 +35,8 @@ const Index = () => {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[80vh] flex items-center">
-        <div className="absolute inset-0">
-          <img src={heroImage} alt="Wellness" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 gradient-hero" />
-        </div>
-        
-        <div className="relative container mx-auto px-4 py-20">
-          <div className="max-w-3xl">
-            <Badge className="mb-4 bg-primary/20 text-primary-foreground border-none">Transform Your Life Today</Badge>
-            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6 animate-fade-up">
-              A Weight-Loss Program For <span className="text-accent">Life</span>
-            </h1>
-            <p className="text-xl text-primary-foreground/90 mb-8 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              Discover premium herbal nutrition products designed to help you achieve your health goals naturally.
-            </p>
-            <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8">
-                <Link to="/products">Explore Products <ArrowRight className="ml-2 h-5 w-5" /></Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 text-lg px-8">
-                <Link to="/contact">Free Consultation</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-10 right-10 hidden lg:block opacity-20 animate-float">
-          <img src={brandIcon} alt="PriyaHerbalHub" className="w-32 h-32" />
-        </div>
-      </section>
+      {/* Hero Slider */}
+      <HeroSlider />
 
       {/* Stats */}
       <section className="py-12 bg-muted/30">

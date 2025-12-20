@@ -7,7 +7,7 @@ const WhatsAppWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   
-  const phoneNumber = "919876543210"; // Replace with actual WhatsApp number
+  const phoneNumber = "918884162999"; // PriyaHerbalHub WhatsApp
   const defaultMessage = "Hi! I'm interested in PriyaHerbalHub products. Can you help me?";
 
   const handleSend = () => {

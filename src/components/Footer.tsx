@@ -67,15 +67,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start space-x-2 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary" />
-                <span>123 Wellness Ave, Health City, HC 12345</span>
+                <span>Bangalore, Karnataka, India</span>
               </li>
               <li className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Phone className="h-4 w-4 text-primary" />
-                <span>+1 (555) 123-4567</span>
+                <a href="tel:+918884162999" className="hover:text-primary">+91 88841 62999</a>
               </li>
               <li className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>info@priyaherbalhub.com</span>
+                <a href="mailto:pranu21m@gmail.com" className="hover:text-primary">pranu21m@gmail.com</a>
               </li>
             </ul>
             <div className="mt-4">

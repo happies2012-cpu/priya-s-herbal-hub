@@ -4,6 +4,10 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import priyaLogo from "@/assets/priya-logo.png";
+import heroNutrition from "@/assets/hero-nutrition.png";
+import heroFitness from "@/assets/hero-fitness.png";
+import heroHealthyFood from "@/assets/hero-healthy-food.png";
+import heroPriya from "@/assets/hero-priya.png";
 
 const slides = [
   {
@@ -14,7 +18,7 @@ const slides = [
     description: "Discover premium herbal nutrition products designed to help you achieve your health goals naturally.",
     cta1: { text: "Explore Products", link: "/products" },
     cta2: { text: "Free Consultation", link: "/contact" },
-    image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1920&q=80",
+    image: heroNutrition,
   },
   {
     id: 2,
@@ -24,17 +28,17 @@ const slides = [
     description: "High-quality protein supplements and sports nutrition for peak performance and faster recovery.",
     cta1: { text: "Shop Sports Nutrition", link: "/products?category=sports" },
     cta2: { text: "View Goals", link: "/goals/fitness" },
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&q=80",
+    image: heroFitness,
   },
   {
     id: 3,
-    badge: "Business Opportunity",
-    title: "Build Your Wellness",
-    highlight: "Empire",
-    description: "Join thousands of successful distributors earning unlimited income while helping others achieve their health goals.",
-    cta1: { text: "Start Today", link: "/business" },
-    cta2: { text: "Learn More", link: "/contact" },
-    image: "https://images.unsplash.com/photo-1556740758-90de374c12ad?w=1920&q=80",
+    badge: "Healthy Eating",
+    title: "Nourish Your Body",
+    highlight: "Naturally",
+    description: "Premium plant-based nutrition and wholesome ingredients for complete daily wellness and vitality.",
+    cta1: { text: "Shop Nutrition", link: "/products?category=daily-nutrition" },
+    cta2: { text: "Learn More", link: "/resources" },
+    image: heroHealthyFood,
   },
   {
     id: 4,
@@ -44,7 +48,7 @@ const slides = [
     description: "Nourish your skin with our herbal skincare collection. Natural ingredients for radiant, healthy skin.",
     cta1: { text: "Shop Skincare", link: "/products?category=skincare" },
     cta2: { text: "See Results", link: "/testimonials" },
-    image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=1920&q=80",
+    image: heroPriya,
   },
 ];
 

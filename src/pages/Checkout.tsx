@@ -80,22 +80,26 @@ const Checkout = () => {
     
     const orderId = `ORD-${Date.now()}`;
     
-    if (addOrder) {
       addOrder({
         id: orderId,
         items: cart,
+        subtotal,
+        tax,
+        shipping,
         total,
         status: "pending",
-        date: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         shippingAddress: {
+          fullName: `${formData.firstName} ${formData.lastName}`,
           street: formData.address,
           city: formData.city,
           state: formData.state || "India",
-          pincode: formData.pincode,
+          zipCode: formData.pincode,
           country: "India",
+          phone: formData.phone,
         },
+        paymentMethod,
       });
-    }
     
     clearCart();
     navigate(`/order-success/${orderId}`);
