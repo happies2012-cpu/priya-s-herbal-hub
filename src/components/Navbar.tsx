@@ -62,12 +62,15 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
+          <Link to="/" className="flex items-center space-x-3 group">
             <img 
               src={priyaLogo} 
               alt="Priya Herbal Hub" 
-              className="h-12 w-auto object-contain transition-transform group-hover:scale-105"
+              className="h-[46px] w-auto object-contain transition-transform group-hover:scale-105"
             />
+            <span className="text-xl font-bold text-primary hidden sm:inline-block">
+              Priya Herbal Hub
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -199,7 +202,7 @@ const Navbar = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem disabled className="font-medium">{user?.name}</DropdownMenuItem>
+                  <DropdownMenuItem disabled className="font-medium">{user?.full_name || user?.email}</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild><Link to="/wishlist">My Wishlist</Link></DropdownMenuItem>
                   <DropdownMenuItem asChild><Link to="/faq">FAQ</Link></DropdownMenuItem>
