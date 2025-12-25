@@ -61,7 +61,40 @@ If you give me access to deployment logs or error messages (or allow me to creat
 
 ---
 
-If you'd like, I can also:
-- Create a GitHub Pull Request with the favicon and footer credit changes.
-- Add a CI job that runs `npm run build` to catch build regressions early.
-- Provide optional a Dockerfile to simplify Coolify deployments.
+CI / GitHub Actions (recommended)
+
+- I added a GitHub Actions workflow `/.github/workflows/ci.yml` that runs on PRs and pushes to `main` / `feat/**` and does the following:
+  - `npm ci && npm run build`
+  - `npm run lint` (non-blocking)
+  - Uploads built `dist/` as an artifact for debugging
+  - Optionally deploys to Vercel when `VERCEL_TOKEN` and `VERCEL_PROJECT_ID` secrets are set in the repo (see below)
+
+- I also added `/.github/workflows/docker-publish.yml` which will build and push a Docker image to GHCR if `GHCR_TOKEN` is provided (useful if you want to deploy to Coolify from an image registry). This workflow can be run manually via GitHub UI.
+
+Vercel configuration
+
+- `vercel.json` is included in the repo and configures Vercel's static build to use `dist/` and rewrites all routes to `index.html` so the SPA works correctly.
+
+Required GitHub repository secrets (for automatic deploys):
+
+- `VERCEL_TOKEN` — your Vercel personal token
+- `VERCEL_ORG_ID` — (optional) Vercel org id
+- `VERCEL_PROJECT_ID` — Vercel project id
+- `GHCR_TOKEN` — (optional) GitHub Container Registry token (to push images)
+
+How to set the secrets:
+1. Go to your GitHub repository > Settings > Secrets & variables > Actions > New repository secret
+2. Add `VERCEL_TOKEN`, `VERCEL_PROJECT_ID` (and `VERCEL_ORG_ID` if you want), or `GHCR_TOKEN` if you use the Docker publish workflow.
+
+Coolify notes
+
+- You can either let Coolify build the Dockerfile from the repo (recommended) or use a pre-built image pushed to GHCR and point Coolify at that image.
+- The `Dockerfile` and `nginx.conf` in the repo work for SPA routing and static serving.
+
+---
+
+If you'd like, I can:
+- Create a GitHub Action that deploys to Coolify automatically after a successful push to `main` (requires credentials / registry or Coolify API access),
+- Help you add the required repository secrets, or
+- Run a manual deploy for you if you invite me as a collaborator or share logs.
+
