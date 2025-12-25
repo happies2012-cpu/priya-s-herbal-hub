@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown, Leaf, ShoppingCart, Heart, GitCompare, User } from "lucide-react";
+import { Menu, X, ShoppingCart, Heart, GitCompare, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "./ThemeToggle";
@@ -8,6 +8,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useCompare } from "@/contexts/CompareContext";
 import { useAuth } from "@/contexts/AuthContext";
+import priyaLogo from "@/assets/priya-logo.png";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -61,11 +62,15 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform group-hover:scale-110">
-              <Leaf className="h-6 w-6" />
-            </div>
-            <span className="text-xl font-bold text-primary">PriyaHerbalHub</span>
+          <Link to="/" className="flex items-center space-x-3 group">
+            <img 
+              src={priyaLogo} 
+              alt="Priya Herbal Hub" 
+              className="h-[46px] w-auto object-contain transition-transform group-hover:scale-105"
+            />
+            <span className="text-xl font-bold text-primary hidden sm:inline-block">
+              Priya Herbal Hub
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -197,7 +202,7 @@ const Navbar = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem disabled className="font-medium">{user?.name}</DropdownMenuItem>
+                  <DropdownMenuItem disabled className="font-medium">{user?.full_name || user?.email}</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild><Link to="/wishlist">My Wishlist</Link></DropdownMenuItem>
                   <DropdownMenuItem asChild><Link to="/faq">FAQ</Link></DropdownMenuItem>

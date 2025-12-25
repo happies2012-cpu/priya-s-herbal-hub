@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { Leaf, Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import priyaLogo from "@/assets/priya-logo.png";
 
 const Footer = () => {
   return (
@@ -10,11 +11,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Column */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <Leaf className="h-6 w-6" />
-              </div>
-              <span className="text-xl font-bold text-primary">PriyaHerbalHub</span>
+            <Link to="/" className="flex items-center">
+              <img 
+                src={priyaLogo} 
+                alt="Priya Herbal Hub" 
+                className="h-14 w-auto object-contain"
+              />
             </Link>
             <p className="text-sm text-muted-foreground">
               Transform your life with premium herbal nutrition and wellness products. Join thousands who've achieved their health goals with us.
@@ -65,15 +67,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start space-x-2 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary" />
-                <span>123 Wellness Ave, Health City, HC 12345</span>
+                <span>Bangalore, Karnataka, India</span>
               </li>
               <li className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Phone className="h-4 w-4 text-primary" />
-                <span>+1 (555) 123-4567</span>
+                <a href="tel:+918884162999" className="hover:text-primary">+91 88841 62999</a>
               </li>
               <li className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>info@priyaherbalhub.com</span>
+                <a href="mailto:pranu21m@gmail.com" className="hover:text-primary">pranu21m@gmail.com</a>
               </li>
             </ul>
             <div className="mt-4">
@@ -87,9 +89,14 @@ const Footer = () => {
         </div>
 
         <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} PriyaHerbalHub. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center md:items-start space-y-1">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} PriyaHerbalHub. All rights reserved.
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Design developed by <a href="https://www.gudeitsol.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">www.gudeitsol.com</a>
+            </p>
+          </div>
           <div className="flex space-x-6">
             <Link to="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
               Privacy Policy
